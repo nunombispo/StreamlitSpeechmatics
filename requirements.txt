@@ -1,0 +1,5 @@
+streamlit
+speechmatics-python
+yt-dlp
+setuptools  # if using Python 3.12
+python-decouple
