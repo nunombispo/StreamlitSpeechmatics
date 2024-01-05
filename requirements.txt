@@ -1,5 +1,8 @@
-streamlit
-speechmatics-python
-yt-dlp
-setuptools  # if using Python 3.12
 python-decouple
+streamlit
+yt-dlp
+speechmatics-python
+openai
+chromadb
+tiktoken
+langchain

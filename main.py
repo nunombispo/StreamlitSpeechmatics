@@ -1,5 +1,7 @@
 import streamlit as st
 import yt_dlp
+
+from question import start_chat
 from speechmatics_client import transcribe, format_chapters, format_transcript
 
 # Set page title
@@ -47,3 +49,26 @@ if youtube_url:
         st.write(f"{chapter['start']} - {chapter['end']}: {chapter['title']}")
         st.caption(chapter['summary'])
 
+    # Prepare chat
+    st.divider()
+    st.subheader('Chat Bot')
+    with st.spinner('Preparing chat...'):
+        # Prepare the chat context
+        transcript_text = ''
+        for transcript in transcript_list:
+            transcript_text += f"{transcript['speaker']} - {transcript['text']}\n"
+        summary_text = summary
+        chapters_text = ''
+        for chapter in chapter_list:
+            chapters_text += f"{chapter['start']} - {chapter['end']}: {chapter['title']}\n"
+        # Start the chat
+        qa_chain = start_chat(transcript_text, summary_text, chapters_text)
+    # Ask a question
+    question = st.text_input('Enter question', placeholder='Ask a question...')
+    if question:
+        with st.spinner('Thinking...'):
+            # Process the question
+            result = qa_chain(question)
+        # Display the answer
+        st.caption('Answer:')
+        st.markdown(result['answer'])

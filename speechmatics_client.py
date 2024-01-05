@@ -2,6 +2,7 @@ from decouple import config
 from speechmatics.models import ConnectionSettings
 from speechmatics.batch_client import BatchClient
 from httpx import HTTPStatusError
+import streamlit as st
 
 
 # API key and language
@@ -31,18 +32,19 @@ conf = {
 
 
 # Transcribe the audio file
+@st.cache_data
 def transcribe(file_path):
     # Open the client using a context manager
     with BatchClient(settings) as client:
         try:
             # Submit the job
-            job_id = client.submit_job(
-                audio=file_path,
-                transcription_config=conf,
-            )
-            print(f"job {job_id} submitted successfully, waiting for transcript")
+            # job_id = client.submit_job(
+            #     audio=file_path,
+            #     transcription_config=conf,
+            # )
+            # print(f"job {job_id} submitted successfully, waiting for transcript")
             # Wait for the job to complete
-            transcription = client.wait_for_completion(job_id, transcription_format="json")
+            transcription = client.wait_for_completion("wxwubcqjds", transcription_format="json")
             summary = transcription["summary"]["content"]
             chapters = transcription["chapters"]
             transcript = transcription["results"]
