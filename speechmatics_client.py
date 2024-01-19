@@ -20,7 +20,8 @@ conf = {
     "type": "transcription",
     "transcription_config": {
         "language": LANGUAGE,
-        "diarization": "speaker"
+        "diarization": "speaker",
+        "operating_point": "enhanced"
     },
     "summarization_config": {
         "content_type": "informative",
